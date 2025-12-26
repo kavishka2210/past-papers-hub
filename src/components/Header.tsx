@@ -1,13 +1,16 @@
-import { Bell, Search, Home } from "lucide-react";
+import { Search, Home, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import NotificationsDropdown from "./NotificationsDropdown";
+import { useAuth } from "@/hooks/useAuth";
 
 interface HeaderProps {
   onSearchClick?: () => void;
 }
 
 const Header = ({ onSearchClick }: HeaderProps) => {
+  const { user, isAdmin } = useAuth();
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -41,6 +44,20 @@ const Header = ({ onSearchClick }: HeaderProps) => {
               Home
             </Link>
           </Button>
+          
+          {isAdmin && (
+            <Button
+              variant="outline"
+              size="sm"
+              asChild
+              className="border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground"
+            >
+              <Link to="/admin">
+                <Settings className="h-4 w-4 mr-2" />
+                Admin
+              </Link>
+            </Button>
+          )}
         </nav>
       </div>
     </header>
